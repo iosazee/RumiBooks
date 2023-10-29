@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div class="border p-3 mt-4">
+    <div class="row pb-2">
+      <h2>Delete Category</h2>
+        <hr />
+    </div>
+    <div class="mb-3">
+      <p>Are you sure you want to delete the category "{{ category.name }}"?</p>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:150px">Delete</button>
+    <a href="{% url 'category_list' %}" class="btn btn-secondary" style="width:150PX">Back to List</a>
+  </div>
+  </form>
+{% endblock %}

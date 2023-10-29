@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container p-3">
+    <div class="row pt-4 mb-3">
+        <div class="col-6">
+            <h2 class="text-secondary"> Category List </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a href="{% url 'category_create' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create New Category
+            </a>
+        </div>
+    </div>
+
+  <table class="table table-bordered table-light tabble-striped" style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Update a Record</th>
+        <th>Delete a Record</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+        <tr>
+          <td width="40%">{{ category.name }}</td>
+          <td>
+            <div class="w-auto btn-group" role="group">
+              <a class="btn btn-primary mx-2" href="{% url 'category_update' category.id %}" >
+                  <i class="bi bi-pencil-square"></i>
+                  Edit
+              </a>
+          </div>
+          </td>
+          <td>
+            <div class="w-auto btn-group" role="group">
+              <a class="btn btn-danger mx-2"href="{% url 'category_delete' category.id %}">
+                  <i class="bi bi-trash3"></i>
+                  Delete
+              </a>
+          </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
