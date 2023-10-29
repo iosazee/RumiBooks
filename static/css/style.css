@@ -1,0 +1,27 @@
+html {
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+
+  body {
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+
+  .mainBox {
+    flex: 1;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
