@@ -87,7 +87,10 @@ class CustomCategoryDeleteView(View):
         return redirect(self.success_url)
 
 
-
+def books_by_category(request, category_id):
+    category = Category.objects.get(pk=category_id)
+    books = Book.objects.filter(category=category)
+    return render(request, 'category/books_by_category.html', {'category': category, 'books': books})
 
 
 
@@ -226,6 +229,9 @@ class SearchView(View):
 
             result_count = results.count()  # Calculate the result count
 
+            # Order the results by title
+            results = results.order_by('title')
+
             paginator = Paginator(results, self.items_per_page)  # Create a paginator
             page = request.GET.get('page')  # Get the current page number
 
@@ -235,4 +241,5 @@ class SearchView(View):
                 results = paginator.page(1)  # Display the first page if the requested page is invalid
 
         return render(request, self.template_name, {'results': results, 'query': query, 'result_count': result_count})
+
 

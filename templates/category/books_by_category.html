@@ -1,0 +1,36 @@
+<!-- books_by_category.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-3">
+    <h2 class="text-secondary">Books in Category: {{ category.name }}</h2>
+    <table class="table table-bordered table-light tabble-striped" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.authors }}</td>
+                    <td>
+                        <a href="{% url 'book_update' book.id %}" class="btn btn-primary">
+                            Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'book_delete' book.id %}" class="btn btn-danger">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

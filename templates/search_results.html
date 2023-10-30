@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Search Results for "{{ query }}" ({{ result_count }} results)</h2>
+    <h3 class="mb-4">Search Results for "{{ query }}" ({{ result_count }} results)</h3>
     <ul class="list-group">
         {% for book in results %}
         <li class="list-group-item">
@@ -22,12 +22,12 @@
         <li class="list-group-item">No results found</li>
         {% endfor %}
     </ul>
-    <div class="pagination mt-4 p-4" >
+
+    <div class="pagination mt-4">
         <span class="step-links">
             {% if results.has_previous %}
-            <a href="?q={{ query }}&page=1" class="icon-link" > <i class="bi bi-caret-left-square-fill"></i> </a>
-            <a href="?q={{ query }}&page={{ results.previous_page_number }}" class="icon-link"><i
-                    class="bi bi-arrow-left-circle-fill"></i> previous</a>
+                <a href="?q={{ query }}&page=1" class="btn btn-info" >first</a>
+                <a href="?q={{ query }}&page={{ results.previous_page_number }}" class="btn btn-info mx-2" >previous</a>
             {% endif %}
 
             <span class="current-page">
@@ -35,14 +35,11 @@
             </span>
 
             {% if results.has_next %}
-            <a href="?q={{ query }}&page={{ results.next_page_number }}" class="icon-link"><i
-                    class="bi bi-arrow-right-circle-fill"></i> </a>
-            <a href="?q={{ query }}&page={{ results.paginator.num_pages }}" class="icon-link"><i
-                    class="bi bi-caret-right-fill"></i></a>
+                <a href="?q={{ query }}&page={{ results.next_page_number }}" class="btn btn-info mx-2" >next</a>
+                <a href="?q={{ query }}&page={{ results.paginator.num_pages }}" class="btn btn-info">last</a>
             {% endif %}
         </span>
     </div>
-
 
 </div>
 {% endblock %}
