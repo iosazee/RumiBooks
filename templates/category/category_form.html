@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="post">
+<form method="post" novalidate class="bg-info">
   {% csrf_token %}
   <div class="container p-3 mt-4">
     <div class="row pb-2">
@@ -12,28 +12,30 @@
       <label for="{{ form.slug.id_for_label }}" class="form-label">{{ form.slug.label_tag }}</label>
       {{ form.slug }}
       {% if form.name.errors %}
-        <div class="invalid-feedback">
-          {{ form.slug.errors }}
-        </div>
+      <div class="invalid-feedback">
+        {{ form.slug.errors }}
+      </div>
       {% endif %}
     </div>
     <div class="mb-3">
       <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label_tag }}</label>
       {{ form.name }}
       {% if form.name.errors %}
-        <div class="invalid-feedback">
-          {{ form.name.errors }}
-        </div>
+      <div class="invalid-feedback">
+        {{ form.name.errors }}
+      </div>
       {% endif %}
     </div>
-    <button type="submit" class="btn btn-primary" style="width:150px">{% if form.instance.pk %} Update {% else %} Create {% endif %}</button>
+    <button type="submit" class="btn btn-primary" style="width:150px">{% if form.instance.pk %} Update {% else %} Create
+      {% endif %}</button>
     <a href="{% url 'category_list' %}" class="btn btn-secondary" style="width:150px">Back to List</a>
   </div>
 </form>
 
 <script>
   // Add the 'form-control' class to input elements
-  document.querySelectorAll('input[type="text"]').forEach(function(input) {
+  document.querySelectorAll('input[type="text"]').forEach(function (input)
+  {
     input.classList.add('form-control');
   });
 </script>

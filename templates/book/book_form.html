@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post" novalidate class="bg-info">
+  {% csrf_token %}
+  <div class="container p-3 mt-4">
+    <div class="row pb-2">
+      <h2>{% if form.instance.pk %}Edit Book{% else %}Create Book{% endif %}</h2>
+      <hr />
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.storeId.id_for_label }}" class="form-label">{{ form.storeId.label_tag }}</label>
+      {{ form.storeId }}
+      <span id="storeId-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label_tag }}</label>
+      {{ form.title }}
+      <span id="title-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.subtitle.id_for_label }}" class="form-label">{{ form.subtitle.label_tag }}</label>
+      {{ form.subtitle }}
+      <span id="subtitle-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.authors.id_for_label }}" class="form-label">{{ form.authors.label_tag }}</label>
+      {{ form.authors }}
+      <span id="authors-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.publisher.id_for_label }}" class="form-label"> {{ form.publisher.label_tag }}</label>
+      {{ form.publisher }}
+      <span id="publisher-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.published_date.id_for_label }}" class="form-label">                      {{ form.published_date.label_tag}}</label>
+      {{ form.published_date }}
+      <span id="published_date-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.category.id_for_label }}" class="form-label">{{ form.category.label_tag }}</label>
+      {{ form.category }}
+      <span id="category-error" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.distribution_expense.id_for_label }}" class="form-label">                 {{form.distribution_expense.label_tag }}</label>
+      {{ form.distribution_expense }}
+      <span id="distribution_expense-error" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:150px">
+      {% if form.instance.pk %} Update {% else %} Create {% endif %}
+    </button>
+    <a href="{% url 'book_list' %}" class="btn btn-secondary" style="width:150px">Back to List</a>
+  </div>
+</form>
+
+<script>
+  // Add the 'form-control' class to input elements
+  document.querySelectorAll('input[type="text"]').forEach(function (input)
+  {
+    input.classList.add('form-control');
+  });
+
+  // Add the 'form-select' class to select elements
+  document.querySelectorAll('select').forEach(function (select)
+  {
+    select.classList.add('form-select');
+  });
+
+
+</script>
+
+{% endblock %}

@@ -22,6 +22,8 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -48,6 +50,39 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous">
         </script>
+
+        <!-- Include Toastr JavaScript from a CDN -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+        <script>
+            function showToastrMessage(message, messageType) {
+                toastr.options = {
+                    "closeButton": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": 5000,
+                };
+                // Use "error" for failed activities, and "success" for successful activities
+                if (messageType === "error") {
+                    toastr.error(message, "Error");
+                } else {
+                    toastr.success(message, "Success");
+                }
+            }
+        </script>
+
+        {% if messages %}
+            <div class="container">
+                <div class="messages">
+                    {% for message in messages %}
+                        <script>
+                            // Change the message type to "error" for failed activities
+                            showToastrMessage("{{ message|escapejs }}", "{{ message.tags }}");
+                        </script>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
 
     </body>
 

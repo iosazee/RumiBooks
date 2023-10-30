@@ -13,7 +13,7 @@ class Category(models.Model):
 class Book(models.Model):
     storeId = models.CharField(max_length=50, db_index=True)
     title = models.CharField(max_length=255, db_index=True)
-    subtitle = models.CharField(max_length=255, db_index=True)
+    subtitle = models.CharField(max_length=255, db_index=True, null=True, blank=True)
     authors = models.CharField(max_length=100, db_index=True)
     publisher = models.CharField(max_length=100, db_index=True)
     published_date = models.DateField()
