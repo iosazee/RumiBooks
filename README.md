@@ -8,7 +8,7 @@ This application was created using:
 
 - Languages: HTML, CSS, JavaScript & Python
 - Frameworks: Django Web Framework
-- Libraries: Bootstrap, Bootswatch, JQuery, ChartJS.
+- Libraries: Bootstrap, Bootswatch, JQuery, ChartJS, ToastrJS
 
 ## Description
 

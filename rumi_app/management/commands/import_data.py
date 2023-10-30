@@ -3,6 +3,7 @@ import pandas as pd
 from rumi_app.models import Book, Category
 from django.core.exceptions import ValidationError
 from dateutil.parser import parse
+from django.db.models import Q  # Import Q for case-insensitive queries
 
 class Command(BaseCommand):
     help = 'Import data from an Excel spreadsheet into the database'
@@ -15,7 +16,15 @@ class Command(BaseCommand):
 
             for index, row in df.iterrows():
                 category_name = row['category']
-                category, created = Category.objects.get_or_create(name=category_name)
+                # Check if a category with a case-insensitive name already exists
+                category = Category.objects.filter(
+                    Q(name__iexact=category_name)
+                ).first()
+
+                if not category:
+                    # If not found, create a new category with the given name
+                    category = Category(name=category_name)
+                    category.save()
 
                 # Convert the 'published_date' format using dateutil
                 raw_date = str(row['published_date'])
@@ -57,3 +66,4 @@ class Command(BaseCommand):
 
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Error: {str(e)}'))
+
