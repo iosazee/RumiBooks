@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.views import View
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -159,3 +160,35 @@ class CustomBookDeleteView(View):
         messages.success(request, success_message)
 
         return redirect(self.success_url)
+
+
+
+
+def expense_report(request):
+    # Retrieve the categories
+    categories = Category.objects.all()
+
+    # Create a list to store the expense data for each category
+    category_expenses = []
+
+    # Calculate total expenses for each category
+    for category in categories:
+        books_in_category = Book.objects.filter(category=category)
+        total_expense = sum(book.distribution_expense for book in books_in_category)
+        category_expenses.append({'category': category, 'total_expense': total_expense})
+
+    context = {'category_expenses': category_expenses}
+    return render(request, 'report/expense_report.html', context)
+
+
+
+def expense_chartdata(request):
+    categories = Category.objects.all()
+    chart_data = []
+
+    for category in categories:
+        books_in_category = Book.objects.filter(category=category)
+        total_expense = sum(book.distribution_expense for book in books_in_category)
+        chart_data.append({'category': category.name, 'total_expense': total_expense})
+
+    return JsonResponse(chart_data, safe=False)
