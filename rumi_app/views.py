@@ -87,10 +87,12 @@ class CustomCategoryDeleteView(View):
         return redirect(self.success_url)
 
 
+
 def books_by_category(request, category_id):
     category = Category.objects.get(pk=category_id)
     books = Book.objects.filter(category=category)
-    return render(request, 'category/books_by_category.html', {'category': category, 'books': books})
+    book_count = books.count()
+    return render(request, 'category/books_by_category.html', {'category': category, 'books': books, 'book_count': book_count})
 
 
 
