@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Search Results for "{{ query }}" ({{ result_count }} results)</h2>
+    <ul class="list-group">
+        {% for book in results %}
+        <li class="list-group-item">
+            <h5 class="mb-3">Book Title: {{ book.title }}</h5>
+            <p class="mb-1"><strong>StoreId:</strong> {{ book.storeId }}</p>
+            <p class="mb-1"><strong>DBId:</strong> {{ book.id }}</p>
+            <p class="mb-1"><strong>Author:</strong> {{ book.authors }}</p>
+            <p class="mb-1"><strong>Description:</strong> {{ book.publisher }}</p>
+            <p><strong>Category:</strong> {{ book.category.name }}</p>
+
+            <!-- Edit button that redirects to the book edit view -->
+            <a href="{% url 'book_update' book.id %}" class="btn btn-primary">Edit</a>
+
+            <!-- Delete button that redirects to the book delete view -->
+            <a href="{% url 'book_delete' book.id %}" class="btn btn-danger">Delete</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No results found</li>
+        {% endfor %}
+    </ul>
+    <div class="pagination mt-4 p-4" >
+        <span class="step-links">
+            {% if results.has_previous %}
+            <a href="?q={{ query }}&page=1" class="icon-link" > <i class="bi bi-caret-left-square-fill"></i> </a>
+            <a href="?q={{ query }}&page={{ results.previous_page_number }}" class="icon-link"><i
+                    class="bi bi-arrow-left-circle-fill"></i> previous</a>
+            {% endif %}
+
+            <span class="current-page">
+                Page {{ results.number }} of {{ results.paginator.num_pages }}.
+            </span>
+
+            {% if results.has_next %}
+            <a href="?q={{ query }}&page={{ results.next_page_number }}" class="icon-link"><i
+                    class="bi bi-arrow-right-circle-fill"></i> </a>
+            <a href="?q={{ query }}&page={{ results.paginator.num_pages }}" class="icon-link"><i
+                    class="bi bi-caret-right-fill"></i></a>
+            {% endif %}
+        </span>
+    </div>
+
+
+</div>
+{% endblock %}

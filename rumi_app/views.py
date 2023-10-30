@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.views import View
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -87,10 +89,17 @@ class CustomCategoryDeleteView(View):
 
 
 
+
+
 class BookListView(ListView):
     model = Book
     template_name = 'book/book_list.html'
     context_object_name = 'books'
+    paginate_by = 9  # Set the number of items per page
+
+    def get_queryset(self):
+        return Book.objects.all().order_by('-id')  # You can change the ordering as needed
+
 
 
 class BookDetailView(DetailView):
@@ -192,3 +201,38 @@ def expense_chartdata(request):
         chart_data.append({'category': category.name, 'total_expense': total_expense})
 
     return JsonResponse(chart_data, safe=False)
+
+
+
+
+class SearchView(View):
+    template_name = 'search_results.html'
+    items_per_page = 10  # Set the number of items per page
+
+    def get(self, request):
+        query = request.GET.get('q')
+        results = None
+        result_count = 0  # Initialize the result count to 0
+
+        if query is not None and query.strip() != "":
+            # Use Q objects to search all relevant fields in the Book model
+            results = Book.objects.filter(
+                Q(title__icontains=query) |  # Search title
+                Q(authors__icontains=query) |  # Search authors
+                Q(publisher__icontains=query) |  # Search publisher
+                Q(category__name__icontains=query) |  # Search category name
+                Q(storeId__icontains=query)  # Search by storeId
+            ).distinct()
+
+            result_count = results.count()  # Calculate the result count
+
+            paginator = Paginator(results, self.items_per_page)  # Create a paginator
+            page = request.GET.get('page')  # Get the current page number
+
+            try:
+                results = paginator.page(page)  # Get the current page
+            except Exception:
+                results = paginator.page(1)  # Display the first page if the requested page is invalid
+
+        return render(request, self.template_name, {'results': results, 'query': query, 'result_count': result_count})
+
