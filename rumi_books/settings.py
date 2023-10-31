@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('secret_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('debug', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://rumibooks.site', '54.89.111.178', '81.31.101.90' ]
 
 
 # Application definition
@@ -133,6 +133,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     "static",
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
