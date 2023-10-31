@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('secret_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('debug', 'False') == 'True'
 
-ALLOWED_HOSTS = ['https://rumibooks.site', '54.89.111.178', '81.31.101.90' ]
+ALLOWED_HOSTS = ['rumibooks.site', 'www.rumibooks.site', '54.89.111.178', '81.31.101.90' ]
 
 
 # Application definition
