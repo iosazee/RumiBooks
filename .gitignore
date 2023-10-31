@@ -88,6 +88,9 @@ local_settings.py
 
 .env
 secrets.json
+keygen.py
+secret.txt
+secrets.md
 
 
 ## Media ##

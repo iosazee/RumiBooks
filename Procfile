@@ -1,0 +1,1 @@
+web: gunicorn rumi_books.wsgi.application -c ./gunicorn.conf.py
